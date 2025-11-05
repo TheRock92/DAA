@@ -8,21 +8,20 @@ class Node:
         self.left = None
         self.right = None
 
-    # for priority queue comparison
     def __lt__(self, other):
         return self.freq < other.freq
 
 
 def huffman_encoding(text):
-
     if not text:
         return {}, ""
+
     # Step 1: Frequency of each character
     freq = {}
     for ch in text:
         freq[ch] = freq.get(ch, 0) + 1
 
-    # Step 2: Create a priority queue (min-heap)
+    # Step 2: Create a min-heap
     heap = [Node(ch, f) for ch, f in freq.items()]
     heapq.heapify(heap)
 
@@ -50,17 +49,18 @@ def huffman_encoding(text):
 
     generate_codes(root, "")
 
-    # Step 5: Encode the text
+    # Step 5: Encode text
     encoded_text = "".join(huffman_codes[ch] for ch in text)
 
     return huffman_codes, encoded_text
 
 
-# Example usage
-text = "greedystrategy"
+# ---------- USER INPUT ----------
+text = input("Enter a string to encode using Huffman Coding: ")
+
 codes, encoded = huffman_encoding(text)
 
-print("Character\tHuffman Code")
+print("\nCharacter\tHuffman Code")
 for ch, code in codes.items():
     print(f"{ch}\t\t{code}")
 
